@@ -8,19 +8,20 @@ from selenium.webdriver.common.keys import Keys
 from bs4 import BeautifulSoup
 
 chrome = 'C:\Program Files (x86)\Google\Chrome\Application\chromedriver.exe'
-# q = [
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-#     [0, 0, 0,   0, 0, 0,   0, 0, 0],
-# ]
+
+q = [
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+    [0, 0, 0,   0, 0, 0,   0, 0, 0],
+]
 q = [
     [0, 9, 3,   4, 0, 0,   0, 8, 0],
     [0, 0, 0,   3, 0, 1,   7, 0, 0],
@@ -80,7 +81,6 @@ class Sudoku(object):
                                 k in self.array_cluster('area',   array, i, j)):
                             temp = copy.deepcopy(array)
                             temp[i][j] = k
-                            # self.calculation(temp)
                             if self.calculation(temp) is not None:
                                 return self.solution
 
@@ -121,14 +121,10 @@ class Sudoku(object):
         url = 'https://nine.websudoku.com/?level=4'
         driver = webdriver.Chrome(executable_path=chrome)
         for _ in range(num):
-            """"""
+            """ important """
             self.solution = None
 
             driver.get(url)  # 輸入範例網址，交給瀏覽器
-            #
-
-            # driver.find_element_by_id('c00').send_keys('2')#填入'somekeys'
-
             source = driver.page_source  # 取得網頁原始碼
             soup = BeautifulSoup(source, 'lxml')
             data = soup.find(id="puzzle_grid").find('tbody').find_all('tr')
@@ -147,7 +143,6 @@ class Sudoku(object):
                         q[i].append(int(value))
             q = np.array(q)
             print("question:\n", q, "\n")
-            #
             print('calculation')
             a = self.calculation(array=q)
             print("answer:\n", a, "\n")
@@ -167,8 +162,8 @@ class Sudoku(object):
 if __name__ == '__main__':
     start = time.time()
     # Sudoku().onlineSudoku(10)
-    Sudoku().guiEvent_windows()
-    print(Sudoku().calculation(q))
+    #     # Sudoku().guiEvent_windows()
+    Sudoku().calculation(q)
     print('花費: %f 秒' % (time.time() - start))
 
 
